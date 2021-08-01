@@ -7,6 +7,7 @@
 #include "route_model.h"
 #include "render.h"
 #include "route_planner.h"
+#include "map"
 
 using namespace std::experimental;
 
@@ -55,12 +56,26 @@ int main(int argc, const char **argv)
     // TODO 1: Declare floats `start_x`, `start_y`, `end_x`, and `end_y` and get
     // user input for these values using std::cin. Pass the user input to the
     // RoutePlanner object below in place of 10, 10, 90, 90.
+    float start_x, start_y, end_x, end_y;
+    start_x = start_y = end_x = end_y = -1;
+    std::map<std::string, float> named_floats({{"start_x", start_x},
+                                            {"start_y", start_y},
+                                            {"end_x", end_x},
+                                            {"end_y", end_y}});
+    std::map<std::string, float>::iterator map_it = named_floats.begin();
+    
+    for(auto& p: named_floats){
+        while(p.second < 0 || p.second > 99){
+            std::cout << "Enter "+p.first+" value from within the range [0,99]";
+            std::cin >> p.second;
+        }
+    }
 
     // Build Model.
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
-    RoutePlanner route_planner{model, 10, 10, 90, 90};
+    RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
     route_planner.AStarSearch();
 
     std::cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
