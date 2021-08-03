@@ -58,18 +58,18 @@ int main(int argc, const char **argv)
     // RoutePlanner object below in place of 10, 10, 90, 90.
     float start_x, start_y, end_x, end_y;
     start_x = start_y = end_x = end_y = -1;
-    std::map<std::string, float> named_floats({{"start_x", start_x},
-                                            {"start_y", start_y},
-                                            {"end_x", end_x},
-                                            {"end_y", end_y}});
-    std::map<std::string, float>::iterator map_it = named_floats.begin();
     
-    for(auto& p: named_floats){
-        while(p.second < 0 || p.second > 99){
-            std::cout << "Enter "+p.first+" value from within the range [0,99]";
-            std::cin >> p.second;
-        }
-    }
+    std::cout << "Insert start_x value: " << std::endl;
+    std::cin >> start_x;
+
+    std::cout << "Insert start_y value: " << std::endl;
+    std::cin >> start_y;
+
+    std::cout << "Insert end_x value: " << std::endl;
+    std::cin >> end_x;
+
+    std::cout << "Insert end_y value: " << std::endl;
+    std::cin >> end_y;
 
     // Build Model.
     RouteModel model{osm_data};
